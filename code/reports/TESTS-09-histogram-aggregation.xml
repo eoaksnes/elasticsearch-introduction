@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuite errors="0" failures="0" name="09-histogram-aggregation.Aggregations" skipped="0" tests="1" time="0.139014"><testcase classname="09-histogram-aggregation.Aggregations" name="Histogram of pizza's weight with interval 1000" status="passed" time="0.139014"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Histogram of pizza's weight with interval 1000
+    Given all pizzas is indexed ... passed in 0.130s
+    When i make a dsl query ... passed in 0.009s
+      """
+      {
+         "aggs": {
+             "by_weight": {
+                "histogram": {
+                   "field": "weight",
+                   "interval": 100
+                }
+             }
+         }
+      }
+      """
+    Then the response should contain ... passed in 0.000s
+      """
+      {
+        "aggregations": {
+          "by_weight": {
+             "buckets": [
+              {
+                 "key": 500,
+                 "doc_count": 3
+              },
+              {
+                 "key": 600,
+                 "doc_count": 6
+              },
+              {
+                 "key": 1000,
+                 "doc_count": 1
+              }
+           ]
+          }
+        }
+      }
+      """
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{u'hits': {u'hits': [{u'_score': 1.0, u'_type': u'pizza', u'_id': u'4', u'_source': {u'topping': [u'Pepperoni'], u'id': 4, u'weight': 590, u'name': u'Double Pepperoni'}, u'_index': u'big-one'}, {u'_score': 1.0, u'_type': u'pizza', u'_id': u'9', u'_source': {u'topping': [u'Ham'], u'id': 9, u'weight': 680, u'name': u'California Malibu'}, u'_index': u'big-one'}, {u'_score': 1.0, u'_type': u'pizza', u'_id': u'5', u'_source': {u'topping': [], u'id': 5, u'weight': 580, u'name': u'Triple Cheese'}, u'_index': u'big-one'}, {u'_score': 1.0, u'_type': u'pizza', u'_id': u'1', u'_source': {u'topping': [u'Marinated Chicken'], u'id': 1, u'weight': 680, u'name': u'California Sunset Chicken'}, u'_index': u'big-one'}, {u'_score': 1.0, u'_type': u'pizza', u'_id': u'6', u'_source': {u'topping': [u'Meatballs', u'Marinated Beef', u'Bacon'], u'id': 6, u'weight': 1015, u'name': u'Take Away Meat Lover'}, u'_index': u'big-one'}, {u'_score': 1.0, u'_type': u'pizza', u'_id': u'2', u'_source': {u'topping': [u'Bacon'], u'id': 2, u'weight': 680, u'name': u'American Bacon'}, u'_index': u'big-one'}, {u'_score': 1.0, u'_type': u'pizza', u'_id': u'7', u'_source': {u'topping': [u'Beef'], u'id': 7, u'weight': 610, u'name': u'New York Grilled Steak'}, u'_index': u'big-one'}, {u'_score': 1.0, u'_type': u'pizza', u'_id': u'3', u'_source': {u'topping': [u'Ham'], u'id': 3, u'weight': 580, u'name': u'Classic American'}, u'_index': u'big-one'}, {u'_score': 1.0, u'_type': u'pizza', u'_id': u'8', u'_source': {u'topping': [u'Chorizo'], u'id': 8, u'weight': 630, u'name': u'Meat lover'}, u'_index': u'big-one'}, {u'_score': 1.0, u'_type': u'pizza', u'_id': u'10', u'_source': {u'topping': [u'Meatballs'], u'id': 10, u'weight': 680, u'name': u'California Meatballs'}, u'_index': u'big-one'}], u'total': 10, u'max_score': 1.0}, u'_shards': {u'successful': 5, u'failed': 0, u'total': 5}, u'took': 6, u'aggregations': {u'by_weight': {u'buckets': [{u'key': 500, u'doc_count': 3}, {u'key': 600, u'doc_count': 6}, {u'key': 1000, u'doc_count': 1}]}}, u'timed_out': False}
+
+]]>
+</system-out></testcase></testsuite>

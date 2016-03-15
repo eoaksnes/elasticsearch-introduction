@@ -1,0 +1,356 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuite errors="0" failures="0" name="01-search.Search" skipped="0" tests="6" time="0.573878"><testcase classname="01-search.Search" name="Find pizzas that contains the words &quot;Bacon&quot; or &quot;Lover&quot;" status="passed" time="0.058852"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Find pizzas that contains the words "Bacon" or "Lover"
+    Given index is re-created ... passed in 0.004s
+    Given all pizza is indexed ... passed in 0.045s
+    When i make a dsl query ... passed in 0.010s
+      """
+      {
+          "query": {
+            "query_string": {
+                "query": "Bacon Lover"
+              }
+          }
+      }
+      """
+    Then the response should contain ... passed in 0.000s
+      """
+      {
+         "hits":
+         {
+            "total":3,
+            "hits":
+            [
+               {
+                  "_source":{
+                      "topping": [
+                        "Meatballs",
+                        "Marinated Beef",
+                        "Bacon"
+                      ],
+                      "name": "Take Away Meat Lover"
+                  }
+               },
+               {
+                  "_source": {
+                    "topping": [
+                      "Chorizo"
+                     ],
+                     "name": "Meat lover"
+                  }
+               },
+               {
+                  "_source": {
+                    "topping": [
+                        "Bacon"
+                     ],
+                     "name": "American Bacon"
+                  }
+               }
+            ]
+         }
+      }
+      """
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{u'hits': {u'hits': [{u'_score': 0.44194174, u'_type': u'pizza', u'_id': u'6', u'_source': {u'topping': [u'Meatballs', u'Marinated Beef', u'Bacon'], u'id': 6, u'weight': 1015, u'name': u'Take Away Meat Lover'}, u'_index': u'big-one'}, {u'_score': 0.1710782, u'_type': u'pizza', u'_id': u'8', u'_source': {u'topping': [u'Chorizo'], u'id': 8, u'weight': 630, u'name': u'Meat lover'}, u'_index': u'big-one'}, {u'_score': 0.15732224, u'_type': u'pizza', u'_id': u'2', u'_source': {u'topping': [u'Bacon'], u'id': 2, u'weight': 680, u'name': u'American Bacon'}, u'_index': u'big-one'}], u'total': 3, u'max_score': 0.44194174}, u'_shards': {u'successful': 5, u'failed': 0, u'total': 5}, u'took': 4, u'timed_out': False}
+
+]]>
+</system-out><system-err>
+<![CDATA[
+Captured stderr:
+No handlers could be found for logger "elasticsearch.trace"
+
+]]>
+</system-err></testcase><testcase classname="01-search.Search" name="Find pizzas that contains both the words &quot;Bacon&quot; and &quot;Lover&quot;" status="passed" time="0.05505"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Find pizzas that contains both the words "Bacon" and "Lover"
+    Given index is re-created ... passed in 0.002s
+    Given all pizza is indexed ... passed in 0.043s
+    When i make a dsl query ... passed in 0.011s
+      """
+      {
+          "query": {
+            "query_string": {
+                "query": "Bacon Lover",
+                "default_operator": "and"
+              }
+          }
+      }
+      """
+    Then the response should contain ... passed in 0.000s
+      """
+      {
+         "hits":
+         {
+            "total":1,
+            "hits":
+            [
+               {
+                  "_source":{
+                      "topping": [
+                        "Meatballs",
+                        "Marinated Beef",
+                        "Bacon"
+                      ],
+                      "name": "Take Away Meat Lover"
+                  }
+               }
+            ]
+         }
+      }
+      """
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{u'hits': {u'hits': [{u'_score': 0.44194174, u'_type': u'pizza', u'_id': u'6', u'_source': {u'topping': [u'Meatballs', u'Marinated Beef', u'Bacon'], u'id': 6, u'weight': 1015, u'name': u'Take Away Meat Lover'}, u'_index': u'big-one'}], u'total': 1, u'max_score': 0.44194174}, u'_shards': {u'successful': 5, u'failed': 0, u'total': 5}, u'took': 4, u'timed_out': False}
+
+]]>
+</system-out></testcase><testcase classname="01-search.Search" name="Find pizzas with a name that contains the word &quot;American&quot;" status="passed" time="0.04985"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Find pizzas with a name that contains the word "American"
+    Given index is re-created ... passed in 0.002s
+    Given all pizza is indexed ... passed in 0.043s
+    When i make a dsl query ... passed in 0.005s
+      """
+      {
+         "query": {
+            "match": {
+               "name" : "American"
+            }
+         }
+      }
+      """
+    Then the response should contain ... passed in 0.000s
+      """
+      {
+         "hits":
+         {
+            "total":2,
+            "hits":
+            [
+               {
+                  "_source":{
+                     "name":"Classic American"
+                  }
+               },
+               {
+                  "_source": {
+                     "name": "American Bacon"
+                  }
+               }
+            ]
+         }
+      }
+      """
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{u'hits': {u'hits': [{u'_score': 0.8784157, u'_type': u'pizza', u'_id': u'3', u'_source': {u'topping': [u'Ham'], u'id': 3, u'weight': 580, u'name': u'Classic American'}, u'_index': u'big-one'}, {u'_score': 0.625, u'_type': u'pizza', u'_id': u'2', u'_source': {u'topping': [u'Bacon'], u'id': 2, u'weight': 680, u'name': u'American Bacon'}, u'_index': u'big-one'}], u'total': 2, u'max_score': 0.8784157}, u'_shards': {u'successful': 5, u'failed': 0, u'total': 5}, u'took': 2, u'timed_out': False}
+
+]]>
+</system-out></testcase><testcase classname="01-search.Search" name="Find pizzas that has &quot;Marinated Beef&quot; topping" status="passed" time="0.196142"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Find pizzas that has "Marinated Beef" topping
+    Given index is re-created ... passed in 0.002s
+    Given custom mapping ... passed in 0.135s
+      """
+      {
+         "pizza":{
+            "properties":{
+               "id":{
+                  "type":"long"
+               },
+               "name":{
+                  "type":"string"
+               },
+               "topping": {
+                  "type": "string",
+                  "index": "not_analyzed"
+               },
+               "weight":{
+                  "type":"long"
+               }
+            }
+         }
+      }
+      """
+    Given all pizza is indexed ... passed in 0.051s
+    When i make a dsl query ... passed in 0.009s
+      """
+      {
+        "query":{
+          "term":{
+            "topping":"Marinated Beef"
+          }
+        }
+      }
+      """
+    Then the response should contain ... passed in 0.000s
+      """
+      {
+         "hits":
+         {
+            "total":1,
+            "hits":
+            [
+               {
+                  "_source":{
+                     "name":"Take Away Meat Lover"
+                  }
+               }
+            ]
+         }
+      }
+      """
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{u'hits': {u'hits': [{u'_score': 1.0, u'_type': u'pizza', u'_id': u'6', u'_source': {u'topping': [u'Meatballs', u'Marinated Beef', u'Bacon'], u'id': 6, u'weight': 1015, u'name': u'Take Away Meat Lover'}, u'_index': u'big-one'}], u'total': 1, u'max_score': 1.0}, u'_shards': {u'successful': 5, u'failed': 0, u'total': 5}, u'took': 2, u'timed_out': False}
+
+]]>
+</system-out></testcase><testcase classname="01-search.Search" name="Find pizzas with a name that contains the word &quot;California&quot; and that has &quot;Meatballs&quot; topping" status="passed" time="0.153802"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Find pizzas with a name that contains the word "California" and that has "Meatballs" topping
+    Given index is re-created ... passed in 0.002s
+    Given custom mapping ... passed in 0.090s
+      """
+      {
+         "pizza":{
+            "properties":{
+               "id":{
+                  "type":"long"
+               },
+               "name":{
+                  "type":"string"
+               },
+               "topping": {
+                  "type": "string",
+                  "index": "not_analyzed"
+               },
+               "weight":{
+                  "type":"long"
+               }
+            }
+         }
+      }
+      """
+    Given all pizza is indexed ... passed in 0.049s
+    When i make a dsl query ... passed in 0.013s
+      """
+      {
+         "query":{
+            "filtered":{
+               "filter":{
+                  "bool":{
+                     "must":[
+                        {
+                           "query":{
+                              "match":{
+                                 "name":"California"
+                              }
+                           }
+                        },
+                        {
+                           "query":{
+                              "term":{
+                                 "topping":"Meatballs"
+                              }
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      }
+      """
+    Then the response should contain ... passed in 0.000s
+      """
+      {
+         "hits":
+         {
+            "total":1,
+            "hits":
+            [
+               {
+                  "_source":{
+                     "name":"California Meatballs"
+                  }
+               }
+            ]
+         }
+      }
+      """
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{u'hits': {u'hits': [{u'_score': 1.0, u'_type': u'pizza', u'_id': u'10', u'_source': {u'topping': [u'Meatballs'], u'id': 10, u'weight': 680, u'name': u'California Meatballs'}, u'_index': u'big-one'}], u'total': 1, u'max_score': 1.0}, u'_shards': {u'successful': 5, u'failed': 0, u'total': 5}, u'took': 1, u'timed_out': False}
+
+]]>
+</system-out></testcase><testcase classname="01-search.Search" name="Find pizzas with weight greater-than or equal to 1000" status="passed" time="0.060182"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Find pizzas with weight greater-than or equal to 1000
+    Given index is re-created ... passed in 0.002s
+    Given all pizza is indexed ... passed in 0.045s
+    When i make a dsl query ... passed in 0.013s
+      """
+      {
+         "query":{
+            "filtered":{
+               "filter":{
+                  "range":{
+                     "weight":{
+                        "gte":1000
+                     }
+                  }
+               }
+            }
+         }
+      }
+      """
+    Then the response should contain ... passed in 0.000s
+      """
+      {
+         "hits":
+         {
+            "total":1,
+            "hits":
+            [
+               {
+                  "_source":{
+                     "weight":1015,
+                     "name":"Take Away Meat Lover"
+                  }
+               }
+            ]
+         }
+      }
+      """
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{u'hits': {u'hits': [{u'_score': 1.0, u'_type': u'pizza', u'_id': u'6', u'_source': {u'topping': [u'Meatballs', u'Marinated Beef', u'Bacon'], u'id': 6, u'weight': 1015, u'name': u'Take Away Meat Lover'}, u'_index': u'big-one'}], u'total': 1, u'max_score': 1.0}, u'_shards': {u'successful': 5, u'failed': 0, u'total': 5}, u'took': 3, u'timed_out': False}
+
+]]>
+</system-out></testcase></testsuite>

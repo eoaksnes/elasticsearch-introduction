@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuite errors="0" failures="0" name="task-12.#Enter feature name here" skipped="0" tests="1" time="0.0"><testcase classname="task-12.#Enter feature name here" name="# Enter scenario name here" status="passed" time="0.0"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: # Enter scenario name here
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase></testsuite>

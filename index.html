@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Introduction to Elasticsearch</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <div class="slides">
+        <section data-background="images/relevance-scoring.jpg">
+            <h1>Elasticsearch</h1>
+            <h7>#Introduction</h7>
+            <p>
+                <small>Eirik Ola Aksnes</small>
+            </p>
+        </section>
+
+        <section>
+            <h2>Agenda</h2>
+            <ul>
+                <li>How does a search engine work</li>
+                <li>Elasticsearch
+                    <ul>
+                        <li>What is</li>
+                        <li>Use cases</li>
+                        <li>How to get started</li>
+                        <li>Own experience</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <section>
+                <h2>How does a search engine work?</h2>
+            </section>
+
+            <section data-background="images/overflow2.jpg">
+                <h2 style="color: black;">Scan through all the documents?</h2>
+
+                <h3 style="color: black;">...every time...</h3>
+                <aside class="notes">
+                    Your document collection is big! Scan all the documents every time you search for something, it
+                    would take forever.
+                </aside>
+            </section>
+
+            <section data-background="images/kokeboka4.png">
+                <h2 style="color:black;">Pre-process the documents and create an index</h2>
+                <aside class="notes">
+                    To make your queries fast and efficient a search engine will pre-process the documents and create an
+                    index
+                </aside>
+            </section>
+
+            <section data-background="white">
+                <h2>Create an inverted index</h2>
+                <img style="box-shadow: none;" data-src="images/inverted-index-1.svg">
+                <aside class="notes">
+                    The inverted index maps terms to documents containing the term.
+                </aside>
+            </section>
+
+            <section data-background="white">
+                <h2>Find unique terms</h2>
+                <img style="box-shadow: none;" data-src="images/inverted-index-2.svg">
+            </section>
+
+            <section data-background="white">
+                <h2>Search against the inverted index</h2>
+                <img style="box-shadow: none;" data-src="images/inverted-index-3.svg">
+            </section>
+
+            <section data-background="white">
+                <h2>Sort by relevance score</h2>
+
+                <p>How well each document matches the query</p>
+                <img style="box-shadow: none;" data-src="images/inverted-index-4.svg">
+                <aside class="notes">
+                    By default, Elasticsearch sorts matching results by their relevance score, that is, by how well each
+                    document matches the query.
+                </aside>
+            </section>
+
+
+        </section>
+
+        <section data-background="white">
+            <img style="box-shadow: none;" data-src="images/introduction.svg">
+            <aside class="notes">
+                <ul>
+                    <li>
+                        Lucene
+                        <ul>
+                            <li>Cumbersome to use directly</li>
+                            <li>Provides few features for scaling past a single machine</li>
+                        </ul>
+                    </li>
+                </ul>
+            </aside>
+        </section>
+
+        <!--<section>
+            <h2>Google web search engine</h2>
+            <img data-src="images/google.png" alt="Down arrow">
+            <aside class="notes">
+                <ul>
+                    <li>Alle kjenner Google for å søke på nettet...</li>
+                    <li>Google er en søkemotor for å finne informasjon på nettet..</li>
+                    <li>Søkemotoren til Google har en liste over sider som inneholder “introduction to”...</li>
+                    <li>Søkemotoren vil finne sider som inneholder alle søkeordene dine, altså sider som inneholder både
+                        “introduction” og “to”
+                    </li>
+                    <li>Søkemotoren vil finne både store og små forekomster av søkeordet ditt</li>
+                    <li>Google har indeksert sider som gjør at de er tilgjengelig for søk….</li>
+                    <li>Søkemotoren til Google er også hjelpsom og vil komme med forslag til hva man bør søke
+                        etter....
+                    </li>
+                </ul>
+            </aside>
+        </section>-->
+
+        <section>
+            <section>
+                <h2>What can Elasticsearch be used for?</h2>
+            </section>
+
+            <section>
+                <h2>For Big Data</h2>
+
+                <p>
+                    Github uses Elasticsearch to search 20TB data, including 1.3 billion files and 130 billion code
+                    lines
+                </p>
+                <aside class="notes">
+                    Relationship databases:
+                    <ul>
+                        <li>This works well with smaller data sets, but is not very scalable</li>
+                        <li>When the volume goes up, performance down (write operations)</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section>
+                <h2>Text search</h2>
+
+                <p>With filtering, aggregations highlightning, pagination...</p>
+                <img data-src="images/github2.png"/>
+            </section>
+
+            <section>
+                <h2>Pure Analytics</h2>
+
+                <p>Count things and summarize your data, lots of data, often on timestamped data!</p>
+                <img data-src="images/analytics.jpg"/>
+            </section>
+
+            <section>
+                <h2>Centralized Logging</h2>
+
+                <p>Logs > Logstash > Elasticsearch > Kibana</p>
+                <img data-src="images/elk.png"/>
+            </section>
+
+            <section>
+                <h2>Geolocation</h2>
+                <img data-src="images/fouraquare.png"/>
+            </section>
+
+            <section>
+                <h2>And more</h2>
+                <ul>
+                    <li>Alert system: Get notifications about changes in your data.</li>
+                    <li>Reporting: Generate, schedule, and email PDF reports.</li>
+                </ul>
+            </section>
+
+        </section>
+
+        <section>
+            <section>
+                <h2>How to get started with Elasticsearch?</h2>
+            </section>
+
+            <section>
+                <h2>It is that easy!</h2>
+
+                <p>ElasticSearch can be downloaded packaged in various formats such as ZIP and TAR.GZ from
+                    elasticsearch.org.</p>
+
+                <p>Elasticsearch only require Java to run!</p>
+                <pre><code class="hljs" data-trim contenteditable>
+                    wget
+                    https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.0/elasticsearch-2.2.0.tar.gz
+                    tar -zxvf elasticsearch-2.2.0.tar.gz
+                    cd elasticsearch-2.2.0/bin
+                    ./elasticsearch.sh
+                </code></pre>
+            </section>
+
+            <section>
+                <h2>Zero configurations</h2>
+
+                <p>
+                    It is easy to get started with Elasticsearch.
+                    It ships with sensible defaults and hides complicated search theory away from beginners.
+                    It just works, right out of the box.
+                </p>
+            </section>
+
+            <section>
+                <h2>Is Elasticsearch alive?</h2>
+
+                <p>You can access it at http://localhost:9200 on your web browser, which returns this:</p>
+                <pre><code class="hljs" data-trim contenteditable>
+                    {
+                    "status":200,
+                    "name":"Cypher",
+                    "cluster_name":"elasticsearch",
+                    "version":{
+                    "number":"1.5.2",
+                    "build_hash":"62ff9868b4c8a0c45860bebb259e21980778ab1c",
+                    "build_timestamp":"2015-04-27T09:21:06Z",
+                    "build_snapshot":false,
+                    "lucene_version":"4.10.4"
+                    },
+                    "tagline":"You Know, for Search"
+                    }
+                </code></pre>
+            </section>
+
+            <section>
+                <h2>REST API</h2>
+
+                <p>Elasticsearch hides the complexities of Lucene behind a simple, coherent, RESTful API (GET, PUT,
+                    POST, DELETE).</p>
+                <!--<p>CURL works just fine!</p>-->
+                <img data-src="images/crud.png"/>
+            </section>
+
+            <section>
+                <h2>What is stored in Elasticsearch?</h2>
+
+                <p>JSON documents!</p>
+                <pre><code class="hljs" data-trim contenteditable>
+                    {
+                    "key1": "value1",
+                    "key2": "value2"
+                    ...
+                    }
+                </code></pre>
+            </section>
+
+            <section>
+                <h2>How to index data?</h2>
+
+                <p>The act of storing data in Elasticsearch is called indexing. An index is like a database. </p>
+                <pre><code class="hljs" data-trim contenteditable>
+                    $curl -X POST localhost:9200/big-one/pizza/ --data
+                    '[
+                    { "id": 1, "name": "California Sunset Chicken" },
+                    { "id": 2, "name": "American Bacon" },
+                    { "id": 3, "name": "Classic American" },
+                    { "id": 4, "name": "Double Pepperoni" },
+                    { "id": 5, "name": "Triple Cheese" },
+                    { "id": 6, "name": "Take Away Meat Lover" },
+                    { "id": 7, "name": "New York Grilled Steak" },
+                    { "id": 8, "name": "Meat lover" },
+                    { "id": 9, "name": "California Malibu" },
+                    { "id": 10, "name": "California Meatballs" }
+                    ]'
+                </code></pre>
+                <aside class="notes">
+                    It is much like the INSERT keyword in SQL except that, if the document already exists, the new
+                    document would replace the old.
+                    The second part indicates on which index (an index could be compared to an SQL database, though I
+                    don’t like this comparison) your query will be performed, and what is the type (a type could be
+                    compared to an SQL table, though I don’t like this comparison either) of the document. From now, I
+                    will write indices and types in orange
+                </aside>
+            </section>
+
+            <section>
+                <h2>Get</h2>
+                <pre><code class="hljs" data-trim contenteditable>
+                    $curl -X GET localhost:9200/big-one/pizza/1
+                </code></pre>
+                <p>Result:</p>
+                <pre><code class="hljs" data-trim contenteditable>
+                    {
+                    "_index":"big-one",
+                    "_type":"pizza",
+                    "_id":"1",
+                    "_version":1,
+                    "found":true,
+                    "_source":{
+                    "name":"California Sunset Chicken"
+                    }
+                    }
+                </code></pre>
+            </section>
+
+            <section>
+                <h2>Update</h2>
+                <pre><code class="hljs" data-trim contenteditable>
+                    $curl -X PUT localhost:9200/big-one/pizza/1 --data
+                    '{
+                    "name":"California Sunset Chicken Awesome"
+                    }'
+                </code></pre>
+                <p>Result:</p>
+               <pre><code class="hljs" data-trim contenteditable>
+                   {
+                   "_index": "big-one",
+                   "_type": "pizza",
+                   "_id": "1",
+                   "_version": 2,
+                   "created": false
+                   }
+               </code></pre>
+            </section>
+
+
+            <section>
+                <h2>Delete</h2>
+                <pre><code class="hljs" data-trim contenteditable>
+                    $curl -X DELETE localhost:9200/big-one/pizza/1
+                </code></pre>
+            </section>
+
+            <section>
+                <h2>So far, all we have is a NoSQL document store which is fast, reliable, scalable and easy to use! Now
+                    to the really cool part, search...</h2>
+            </section>
+
+            <section>
+                <h2>Basic free text search</h2>
+                <pre><code class="hljs" data-trim contenteditable>
+                    $curl -X GET localhost:9200/big-one/pizza/_search?q=California
+                </code></pre>
+                <p>Result:</p>
+                <pre><code class="hljs" data-trim contenteditable>
+                    {
+                    "took":6,
+                    "timed_out":false,
+                    "_shards":{
+                    "total":5,
+                    "successful":5,
+                    "failed":0
+                    },
+                    "hits":{
+                    "total":3,
+                    "max_score":0.70273256,
+                    "hits":[
+                    {
+                    "_index":"big-one",
+                    "_type":"pizza",
+                    "_id":"10",
+                    "_score":0.70273256,
+                    "_source":{
+                    "name":"California Meatballs"
+                    }
+                    },
+                    {
+                    "_index":"big-one",
+                    "_type":"pizza",
+                    "_id":"9",
+                    "_score":0.5,
+                    "_source":{
+                    "name":"California Malibu"
+                    }
+                    },
+                    {
+                    "_index":"big-one",
+                    "_type":"pizza",
+                    "_id":"1",
+                    "_score":0.5,
+                    "_source":{
+                    "name":"California Sunset Chicken"
+                    }
+                    }
+                    ]
+                    }
+                    }
+                </code></pre>
+            </section>
+
+            <section>
+                <h2>Alternate Approach</h2>
+                <ul>
+                    <li>Search using Query DSL</li>
+                    <li>JSON in request body</li>
+                </ul>
+                <aside class="notes">
+                    Query-string search is handy for ad hoc searches from the command line, but it has its
+                    limitations.
+                    Elasticsearch provides a rich, flexible, query language called the Query DSL, which allows us to
+                    build much more complicated, robust queries.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Query DSL - Search</h2>
+
+                <p>Finds all documents matching the given search keywords, and returns them sorted by relevance.</p>
+                <pre><code class="hljs" data-trim contenteditable>
+                    $curl -XGET ‘localhost:9200/books/book/_search’ -d ‘{
+                    "query" : {
+                    "match" : {
+                    "name" : "Meat"
+                    }
+                    }
+                    }’
+                </code></pre>
+            </section>
+
+            <section>
+                <h2>Query DSL - Search result</h2>
+                <pre><code class="hljs" data-trim contenteditable>
+                    {
+                    "took": 3,
+                    "timed_out": false,
+                    "_shards": {
+                    "total": 5,
+                    "successful": 5,
+                    "failed": 0
+                    },
+                    "hits": {
+                    "total": 2,
+                    "max_score": 0.8784157,
+                    "hits": [
+                    {
+                    "_index": "big-one",
+                    "_type": "pizza",
+                    "_id": "8",
+                    "_score": 0.8784157,
+                    "_source": {
+                    "topping": [
+                    "Chorizo"
+                    ],
+                    "name": "Meat lover"
+                    }
+                    },
+                    {
+                    "_index": "big-one",
+                    "_type": "pizza",
+                    "_id": "6",
+                    "_score": 0.5,
+                    "_source": {
+                    "topping": [
+                    "Meatballs",
+                    "Marinated Beef",
+                    "Bacon"
+                    ],
+                    "name": "Take Away Meat Lover"
+                    }
+                    }
+                    ]
+                    }
+                    }
+                </code></pre>
+            </section>
+
+            <section>
+                <h2>And much more...</h2>
+            </section>
+
+        </section>
+
+        <section>
+            <section>
+                <h2>Own experience with Elasticsearch</h2>
+            </section>
+
+            <section data-background="images/kokeboka4.png">
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            Grunnen til at jeg ønsket å lære meg om søkemotorer var...
+                        </li>
+                        <li>
+                            At jeg lenge har samlet på mat oppskrifter...
+                        </li>
+                        <li>
+                            Og etter hvert har det blitt veldig mange mat oppskrifter, nesten 400 sider...
+                        </li>
+                        <li>
+                            Som gjør at det nesten er umulig å finne det man søke etter...
+                        </li>
+                        <li>
+                            F.eks jeg ønsker å finne alle hovedretter som inneholder kylling...
+                        </li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section>
+                <h2>Alt Mulig Mat</h2>
+                <a href="https://altmuligmat.no" target="_blank"><img data-src="images/altmuligmat.png"/></a>
+            </section>
+
+            <section>
+                <h2>How to use Ealsticsearch?</h2>
+
+                <p>Commonly used in addition to another database...</p>
+                <img data-src="images/overview.png"/>
+            </section>
+
+            <section>
+                <h2>Show user accesss!</h2>
+
+            </section>
+        </section>
+
+        <section>
+            <h2>The END</h2>
+
+            <p>With Elasticsearch it is easy to start building advanced search functionality. No configuration is
+                needed—just add data and start searching!</p>
+        </section>
+
+        <section>
+            <h2>References</h2>
+            <ul>
+                <li>
+                    <a href="https://nullwords.wordpress.com/2013/04/18/inverted-indexes-inside-how-search-engines-work/"
+                       target="_blank">Inverted Indexes – Inside How Search Engines Work</a></li>
+                <li><a href="http://operational.io/elk-stack-for-network-operations-reloaded/" target="_blank">ELK Stack
+                    for Network Operations</a></li>
+                <li><a href="http://www.slideshare.net/bigdatalondon/3-elastic-searchcostin-leau" target="_blank">Search
+                    and Analytics (using Elasticsearch)</a></li>
+                <li><a href="http://www.slideshare.net/sdenthumdas/introduction-to-elasticsearch-47385272"
+                       target="_blank">Introduction to Elastic-search</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <section>
+                <h2>Workshop</h2>
+            </section>
+
+            <section>
+                <h2>Overview - Query DSL</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Filters</th>
+                        <th>Queries</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Excat match</td>
+                        <td>Full text search</td>
+                    </tr>
+                    <tr>
+                        <td>Binary yes/no</td>
+                        <td>Relevance scoring</td>
+                    </tr>
+                    <tr>
+                        <td>Fast</td>
+                        <td>Relativly slow</td>
+                    </tr>
+                    <tr>
+                        <td>Cacheable</td>
+                        <td>Not cacheable</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+    </div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: 'plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true}
+        ]
+    });
+
+</script>
+
+</body>
+</html>

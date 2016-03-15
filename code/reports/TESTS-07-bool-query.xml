@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuite errors="0" failures="0" name="07-bool-query.Full text and term level queries combined" skipped="0" tests="1" time="0.156037"><testcase classname="07-bool-query.Full text and term level queries combined" name="Find pizzas with a name that contains the word &quot;California&quot; and that has &quot;Meatballs&quot; topping" status="passed" time="0.156037"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Find pizzas with a name that contains the word "California" and that has "Meatballs" topping
+    Given all pizzas is indexed ... passed in 0.149s
+    When i make a dsl query ... passed in 0.007s
+      """
+      {
+         "query":{
+            "filtered":{
+               "filter":{
+                  "bool":{
+                     "must":[
+                        {
+                           "query":{
+                              "match":{
+                                 "name":"California"
+                              }
+                           }
+                        },
+                        {
+                           "query":{
+                              "term":{
+                                 "topping":"Meatballs"
+                              }
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      }
+      """
+    Then the response should contain ... passed in 0.000s
+      """
+      {
+         "hits":
+         {
+            "total":1,
+            "hits":
+            [
+               {
+                  "_source":{
+                     "name":"California Meatballs"
+                  }
+               }
+            ]
+         }
+      }
+      """
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{u'hits': {u'hits': [{u'_score': 1.0, u'_type': u'pizza', u'_id': u'10', u'_source': {u'topping': [u'Meatballs'], u'id': 10, u'weight': 680, u'name': u'California Meatballs'}, u'_index': u'big-one'}], u'total': 1, u'max_score': 1.0}, u'_shards': {u'successful': 5, u'failed': 0, u'total': 5}, u'took': 2, u'timed_out': False}
+
+]]>
+</system-out></testcase></testsuite>

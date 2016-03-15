@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuite errors="0" failures="0" name="task-02.Full text queries" skipped="0" tests="1" time="0.052118"><testcase classname="task-02.Full text queries" name="Find pizzas that contains the words &quot;Bacon&quot; or &quot;Lover&quot;" status="passed" time="0.052118"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Find pizzas that contains the words "Bacon" or "Lover"
+    Given index is re-created ... passed in 0.003s
+    Given all pizza is indexed ... passed in 0.040s
+    When i make a dsl query ... passed in 0.009s
+      """
+      {
+          "query": {
+            "query_string": {
+                "query": "Bacon Lover"
+              }
+          }
+      }
+      """
+    Then the response should contain ... passed in 0.000s
+      """
+      {
+         "hits":
+         {
+            "total":3,
+            "hits":
+            [
+               {
+                  "_source":{
+                      "topping": [
+                        "Meatballs",
+                        "Marinated Beef",
+                        "Bacon"
+                      ],
+                      "name": "Take Away Meat Lover"
+                  }
+               },
+               {
+                  "_source": {
+                    "topping": [
+                      "Chorizo"
+                     ],
+                     "name": "Meat lover"
+                  }
+               },
+               {
+                  "_source": {
+                    "topping": [
+                        "Bacon"
+                     ],
+                     "name": "American Bacon"
+                  }
+               }
+            ]
+         }
+      }
+      """
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{u'hits': {u'hits': [{u'_score': 0.44194174, u'_type': u'pizza', u'_id': u'6', u'_source': {u'topping': [u'Meatballs', u'Marinated Beef', u'Bacon'], u'id': 6, u'weight': 1015, u'name': u'Take Away Meat Lover'}, u'_index': u'big-one'}, {u'_score': 0.1710782, u'_type': u'pizza', u'_id': u'8', u'_source': {u'topping': [u'Chorizo'], u'id': 8, u'weight': 630, u'name': u'Meat lover'}, u'_index': u'big-one'}, {u'_score': 0.15732224, u'_type': u'pizza', u'_id': u'2', u'_source': {u'topping': [u'Bacon'], u'id': 2, u'weight': 680, u'name': u'American Bacon'}, u'_index': u'big-one'}], u'total': 3, u'max_score': 0.44194174}, u'_shards': {u'successful': 5, u'failed': 0, u'total': 5}, u'took': 5, u'timed_out': False}
+
+]]>
+</system-out></testcase></testsuite>

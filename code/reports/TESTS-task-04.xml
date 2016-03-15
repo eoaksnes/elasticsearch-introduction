@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuite errors="0" failures="0" name="task-04.Full text queries" skipped="0" tests="1" time="0.056641"><testcase classname="task-04.Full text queries" name="Find pizzas with a name that contains the word &quot;American&quot;" status="passed" time="0.056641"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Find pizzas with a name that contains the word "American"
+    Given index is re-created ... passed in 0.002s
+    Given all pizza is indexed ... passed in 0.045s
+    When i make a dsl query ... passed in 0.009s
+      """
+      {
+         "query": {
+            "match": {
+               "name" : "American"
+            }
+         }
+      }
+      """
+    Then the response should contain ... passed in 0.000s
+      """
+      {
+         "hits":
+         {
+            "total":2,
+            "hits":
+            [
+               {
+                  "_source":{
+                     "name":"Classic American"
+                  }
+               },
+               {
+                  "_source": {
+                     "name": "American Bacon"
+                  }
+               }
+            ]
+         }
+      }
+      """
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{u'hits': {u'hits': [{u'_score': 0.8784157, u'_type': u'pizza', u'_id': u'3', u'_source': {u'topping': [u'Ham'], u'id': 3, u'weight': 580, u'name': u'Classic American'}, u'_index': u'big-one'}, {u'_score': 0.625, u'_type': u'pizza', u'_id': u'2', u'_source': {u'topping': [u'Bacon'], u'id': 2, u'weight': 680, u'name': u'American Bacon'}, u'_index': u'big-one'}], u'total': 2, u'max_score': 0.8784157}, u'_shards': {u'successful': 5, u'failed': 0, u'total': 5}, u'took': 2, u'timed_out': False}
+
+]]>
+</system-out></testcase></testsuite>

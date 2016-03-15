@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuite errors="0" failures="0" name="01-facets.Search" skipped="0" tests="1" time="0.077918"><testcase classname="01-facets.Search" name="Search for &quot;American&quot;" status="passed" time="0.077918"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Search for "American"
+    Given index is re-created ... passed in 0.004s
+    Given custom mapping ... passed in 0.002s
+      """
+      {
+         "pizza":{
+            "properties":{
+               "id":{
+                  "type":"long"
+               },
+               "name":{
+                  "type":"string"
+               },
+               "topping": {
+                  "type": "string",
+                  "index": "not_analyzed"
+               },
+               "weight":{
+                  "type":"long"
+               }
+            }
+         }
+      }
+      """
+    Given all pizza is indexed ... passed in 0.038s
+    When i make a dsl query ... passed in 0.033s
+      """
+      {
+         "aggs":{
+            "facets":{
+               "filter":{
+                  "bool":{
+                     "must":[
+                        {
+                           "query":{
+                              "match":{
+                                 "name":"California"
+                              }
+                           }
+                        },
+                        {
+                           "query":{
+                              "term":{
+                                 "topping":"Meatballs"
+                              }
+                           }
+                        }
+                     ]
+                  }
+               },
+               "aggs":{
+                  "toppings":{
+                     "terms":{
+                        "field":"topping"
+                     }
+                  }
+               }
+            }
+         },
+         "post_filter":{
+            "bool":{
+               "must":[
+                  {
+                     "query":{
+                        "match":{
+                           "name":"California"
+                        }
+                     }
+                  },
+                  {
+                     "query":{
+                        "term":{
+                           "topping":"Meatballs"
+                        }
+                     }
+                  }
+               ]
+            }
+         }
+      }
+      """
+    Then the response should contain ... passed in 0.000s
+      """
+      {
+         "hits":{
+            "total":1,
+            "hits":[
+               {
+                  "_source":{
+                      "name":"California Meatballs"
+                  }
+               }
+            ]
+         },
+         "aggregations":{
+            "facets":{
+               "doc_count":1,
+               "toppings":{
+                  "buckets":[
+                     {
+                        "key":"Meatballs",
+                        "doc_count":1
+                     }
+                  ]
+               }
+            }
+         }
+      }
+      """
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{u'hits': {u'hits': [{u'_score': 1.0, u'_type': u'pizza', u'_id': u'10', u'_source': {u'topping': [u'Meatballs'], u'id': 10, u'weight': 680, u'name': u'California Meatballs'}, u'_index': u'big-one'}], u'total': 1, u'max_score': 1.0}, u'_shards': {u'successful': 5, u'failed': 0, u'total': 5}, u'took': 12, u'aggregations': {u'facets': {u'toppings': {u'buckets': [{u'key': u'Meatballs', u'doc_count': 1}], u'sum_other_doc_count': 0, u'doc_count_error_upper_bound': 0}, u'doc_count': 1}}, u'timed_out': False}
+
+]]>
+</system-out><system-err>
+<![CDATA[
+Captured stderr:
+No handlers could be found for logger "elasticsearch.trace"
+
+]]>
+</system-err></testcase></testsuite>

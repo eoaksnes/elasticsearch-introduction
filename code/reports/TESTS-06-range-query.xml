@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuite errors="0" failures="0" name="06-range-query.Term level queries" skipped="0" tests="1" time="0.157937"><testcase classname="06-range-query.Term level queries" name="Find pizzas with weight greater-than or equal to 1000" status="passed" time="0.157937"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Find pizzas with weight greater-than or equal to 1000
+    Given all pizzas is indexed ... passed in 0.143s
+    When i make a dsl query ... passed in 0.015s
+      """
+      {
+         "query":{
+            "filtered":{
+               "filter":{
+                  "range":{
+                     "weight":{
+                        "gte":1000
+                     }
+                  }
+               }
+            }
+         }
+      }
+      """
+    Then the response should contain ... passed in 0.000s
+      """
+      {
+         "hits":
+         {
+            "total":1,
+            "hits":
+            [
+               {
+                  "_source":{
+                     "weight":1015,
+                     "name":"Take Away Meat Lover"
+                  }
+               }
+            ]
+         }
+      }
+      """
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{u'hits': {u'hits': [{u'_score': 1.0, u'_type': u'pizza', u'_id': u'6', u'_source': {u'topping': [u'Meatballs', u'Marinated Beef', u'Bacon'], u'id': 6, u'weight': 1015, u'name': u'Take Away Meat Lover'}, u'_index': u'big-one'}], u'total': 1, u'max_score': 1.0}, u'_shards': {u'successful': 5, u'failed': 0, u'total': 5}, u'took': 3, u'timed_out': False}
+
+]]>
+</system-out></testcase></testsuite>
