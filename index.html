@@ -246,19 +246,19 @@
 
                 <p>You can access it at http://localhost:9200 on your web browser, which returns this:</p>
                 <pre><code class="hljs" data-trim contenteditable>
-                    {
-                    "status":200,
-                    "name":"Cypher",
-                    "cluster_name":"elasticsearch",
-                    "version":{
-                    "number":"1.5.2",
-                    "build_hash":"62ff9868b4c8a0c45860bebb259e21980778ab1c",
-                    "build_timestamp":"2015-04-27T09:21:06Z",
-                    "build_snapshot":false,
-                    "lucene_version":"4.10.4"
-                    },
-                    "tagline":"You Know, for Search"
-                    }
+{
+   "status":200,
+   "name":"Cypher",
+   "cluster_name":"elasticsearch",
+   "version":{
+      "number":"1.5.2",
+      "build_hash":"62ff9868b4c8a0c45860bebb259e21980778ab1c",
+      "build_timestamp":"2015-04-27T09:21:06Z",
+      "build_snapshot":false,
+      "lucene_version":"4.10.4"
+   },
+   "tagline":"You Know, for Search"
+}                    
                 </code></pre>
             </section>
 
@@ -276,11 +276,11 @@
 
                 <p>JSON documents!</p>
                 <pre><code class="hljs" data-trim contenteditable>
-                    {
-                    "key1": "value1",
-                    "key2": "value2"
-                    ...
-                    }
+{
+   "key1": "value1",
+   "key2": "value2"
+   ...
+}
                 </code></pre>
             </section>
 
@@ -289,19 +289,19 @@
 
                 <p>The act of storing data in Elasticsearch is called indexing. An index is like a database. </p>
                 <pre><code class="hljs" data-trim contenteditable>
-                    $curl -X POST localhost:9200/big-one/pizza/ --data
-                    '[
-                    { "id": 1, "name": "California Sunset Chicken" },
-                    { "id": 2, "name": "American Bacon" },
-                    { "id": 3, "name": "Classic American" },
-                    { "id": 4, "name": "Double Pepperoni" },
-                    { "id": 5, "name": "Triple Cheese" },
-                    { "id": 6, "name": "Take Away Meat Lover" },
-                    { "id": 7, "name": "New York Grilled Steak" },
-                    { "id": 8, "name": "Meat lover" },
-                    { "id": 9, "name": "California Malibu" },
-                    { "id": 10, "name": "California Meatballs" }
-                    ]'
+$curl -X POST localhost:9200/big-one/pizza/ --data
+'[
+{ "id": 1, "name": "California Sunset Chicken" },
+{ "id": 2, "name": "American Bacon" },
+{ "id": 3, "name": "Classic American" },
+{ "id": 4, "name": "Double Pepperoni" },
+{ "id": 5, "name": "Triple Cheese" },
+{ "id": 6, "name": "Take Away Meat Lover" },
+{ "id": 7, "name": "New York Grilled Steak" },
+{ "id": 8, "name": "Meat lover" },
+{ "id": 9, "name": "California Malibu" },
+{ "id": 10, "name": "California Meatballs" }
+]'
                 </code></pre>
                 <aside class="notes">
                     It is much like the INSERT keyword in SQL except that, if the document already exists, the new
@@ -320,36 +320,36 @@
                 </code></pre>
                 <p>Result:</p>
                 <pre><code class="hljs" data-trim contenteditable>
-                    {
-                    "_index":"big-one",
-                    "_type":"pizza",
-                    "_id":"1",
-                    "_version":1,
-                    "found":true,
-                    "_source":{
-                    "name":"California Sunset Chicken"
-                    }
-                    }
+{
+   "_index":"big-one",
+   "_type":"pizza",
+   "_id":"1",
+   "_version":1,
+   "found":true,
+   "_source":{
+      "name":"California Sunset Chicken"
+   }
+}
                 </code></pre>
             </section>
 
             <section>
                 <h2>Update</h2>
                 <pre><code class="hljs" data-trim contenteditable>
-                    $curl -X PUT localhost:9200/big-one/pizza/1 --data
-                    '{
-                    "name":"California Sunset Chicken Awesome"
-                    }'
+$curl -X PUT localhost:9200/big-one/pizza/1 --data
+'{ 
+   "name":"California Sunset Chicken Awesome" 
+}'
                 </code></pre>
                 <p>Result:</p>
                <pre><code class="hljs" data-trim contenteditable>
-                   {
-                   "_index": "big-one",
-                   "_type": "pizza",
-                   "_id": "1",
-                   "_version": 2,
-                   "created": false
-                   }
+{
+   "_index":"big-one",
+   "_type":"pizza",
+   "_id":"1",
+   "_version":2,
+   "created":false
+}
                </code></pre>
             </section>
 
@@ -373,48 +373,48 @@
                 </code></pre>
                 <p>Result:</p>
                 <pre><code class="hljs" data-trim contenteditable>
-                    {
-                    "took":6,
-                    "timed_out":false,
-                    "_shards":{
-                    "total":5,
-                    "successful":5,
-                    "failed":0
-                    },
-                    "hits":{
-                    "total":3,
-                    "max_score":0.70273256,
-                    "hits":[
-                    {
-                    "_index":"big-one",
-                    "_type":"pizza",
-                    "_id":"10",
-                    "_score":0.70273256,
-                    "_source":{
-                    "name":"California Meatballs"
-                    }
-                    },
-                    {
-                    "_index":"big-one",
-                    "_type":"pizza",
-                    "_id":"9",
-                    "_score":0.5,
-                    "_source":{
-                    "name":"California Malibu"
-                    }
-                    },
-                    {
-                    "_index":"big-one",
-                    "_type":"pizza",
-                    "_id":"1",
-                    "_score":0.5,
-                    "_source":{
-                    "name":"California Sunset Chicken"
-                    }
-                    }
-                    ]
-                    }
-                    }
+{
+   "took":6,
+   "timed_out":false,
+   "_shards":{
+      "total":5,
+      "successful":5,
+      "failed":0
+   },
+   "hits":{
+      "total":3,
+      "max_score":0.70273256,
+      "hits":[
+         {
+            "_index":"big-one",
+            "_type":"pizza",
+            "_id":"10",
+            "_score":0.70273256,
+            "_source":{
+               "name":"California Meatballs"
+            }
+         },
+         {
+            "_index":"big-one",
+            "_type":"pizza",
+            "_id":"9",
+            "_score":0.5,
+            "_source":{
+               "name":"California Malibu"
+            }
+         },
+         {
+            "_index":"big-one",
+            "_type":"pizza",
+            "_id":"1",
+            "_score":0.5,
+            "_source":{
+               "name":"California Sunset Chicken"
+            }
+         }
+      ]
+   }
+}
                 </code></pre>
             </section>
 
@@ -437,60 +437,64 @@
 
                 <p>Finds all documents matching the given search keywords, and returns them sorted by relevance.</p>
                 <pre><code class="hljs" data-trim contenteditable>
-                    $curl -XGET ‘localhost:9200/books/book/_search’ -d ‘{
-                    "query" : {
-                    "match" : {
-                    "name" : "Meat"
-                    }
-                    }
-                    }’
+                    $curl -XGET ‘localhost:9200/books/book/_search’ -d 
+‘
+{
+   "query":{
+      "match":{
+         "name":"Meat"
+      }
+   }
+}
+’
+
                 </code></pre>
             </section>
 
             <section>
                 <h2>Query DSL - Search result</h2>
                 <pre><code class="hljs" data-trim contenteditable>
-                    {
-                    "took": 3,
-                    "timed_out": false,
-                    "_shards": {
-                    "total": 5,
-                    "successful": 5,
-                    "failed": 0
-                    },
-                    "hits": {
-                    "total": 2,
-                    "max_score": 0.8784157,
-                    "hits": [
-                    {
-                    "_index": "big-one",
-                    "_type": "pizza",
-                    "_id": "8",
-                    "_score": 0.8784157,
-                    "_source": {
-                    "topping": [
-                    "Chorizo"
-                    ],
-                    "name": "Meat lover"
-                    }
-                    },
-                    {
-                    "_index": "big-one",
-                    "_type": "pizza",
-                    "_id": "6",
-                    "_score": 0.5,
-                    "_source": {
-                    "topping": [
-                    "Meatballs",
-                    "Marinated Beef",
-                    "Bacon"
-                    ],
-                    "name": "Take Away Meat Lover"
-                    }
-                    }
-                    ]
-                    }
-                    }
+{
+   "took":3,
+   "timed_out":false,
+   "_shards":{
+      "total":5,
+      "successful":5,
+      "failed":0
+   },
+   "hits":{
+      "total":2,
+      "max_score":0.8784157,
+      "hits":[
+         {
+            "_index":"big-one",
+            "_type":"pizza",
+            "_id":"8",
+            "_score":0.8784157,
+            "_source":{
+               "topping":[
+                  "Chorizo"
+               ],
+               "name":"Meat lover"
+            }
+         },
+         {
+            "_index":"big-one",
+            "_type":"pizza",
+            "_id":"6",
+            "_score":0.5,
+            "_source":{
+               "topping":[
+                  "Meatballs",
+                  "Marinated Beef",
+                  "Bacon"
+               ],
+               "name":"Take Away Meat Lover"
+            }
+         }
+      ]
+   }
+}
                 </code></pre>
             </section>
 
