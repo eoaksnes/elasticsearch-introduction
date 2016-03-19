@@ -69,9 +69,9 @@
             </section>
 
             <section data-background="images/overflow2.jpg">
-                <h2 style="color: black;">Scan through all the documents?</h2>
-
-                <h3 style="color: black;">...every time...</h3>
+                <blockquote style="background: black; padding: 10px;">
+                    Scan through all the documents every time you search for something?
+                </blockquote>
                 <aside class="notes">
                     Your document collection is big! Scan all the documents every time you search for something, it
                     would take forever.
@@ -79,7 +79,9 @@
             </section>
 
             <section data-background="images/kokeboka4.png">
-                <h2 style="color:black;">Pre-process the documents and create an index</h2>
+                <blockquote style="background: black; padding: 10px;">
+                    Pre-process the documents and create an index!
+                </blockquote>
                 <aside class="notes">
                     To make your queries fast and efficient a search engine will pre-process the documents and create an
                     index
@@ -105,7 +107,7 @@
             </section>
 
             <section data-background="white">
-                <h2>Sort by relevance score</h2>
+                <h2>Sort by relevance</h2>
 
                 <p>How well each document matches the query</p>
                 <img style="box-shadow: none;" data-src="images/inverted-index-4.svg">
@@ -155,7 +157,8 @@
 
         <section>
             <section>
-                <h2>What can Elasticsearch be used for?</h2>
+                <h2>Use Cases</h2>
+                <h5>What can Elasticsearch be used for?</h5>
             </section>
 
             <section>
@@ -177,7 +180,7 @@
             <section>
                 <h2>Text search</h2>
 
-                <p>With filtering, aggregations highlightning, pagination...</p>
+                <p>With filtering, aggregations, highlightning, pagination...</p>
                 <img data-src="images/github2.png"/>
             </section>
 
@@ -200,13 +203,13 @@
                 <img data-src="images/fouraquare.png"/>
             </section>
 
-            <section>
+            <!--<section>
                 <h2>And more</h2>
                 <ul>
                     <li>Alert system: Get notifications about changes in your data.</li>
                     <li>Reporting: Generate, schedule, and email PDF reports.</li>
                 </ul>
-            </section>
+            </section>-->
 
         </section>
 
@@ -223,22 +226,25 @@
 
                 <p>Elasticsearch only require Java to run!</p>
                 <pre><code class="hljs" data-trim contenteditable>
-                    wget
-                    https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.0/elasticsearch-2.2.0.tar.gz
-                    tar -zxvf elasticsearch-2.2.0.tar.gz
-                    cd elasticsearch-2.2.0/bin
-                    ./elasticsearch.sh
+wget https://download.elasticsearch.org/elasticsearch/....
+tar -zxvf elasticsearch-2.2.0.tar.gz
+cd elasticsearch-2.2.0/bin
+./elasticsearch.sh
                 </code></pre>
             </section>
 
             <section>
                 <h2>Zero configurations</h2>
-
-                <p>
-                    It is easy to get started with Elasticsearch.
-                    It ships with sensible defaults and hides complicated search theory away from beginners.
-                    It just works, right out of the box.
-                </p>
+                <ul>
+                    <li>It just works, right out of the box
+                        <ul>
+                            <li>Sensible defaults</li>
+                        </ul>
+                    </li>
+                </ul>
+                <aside class="notes">
+                    It is easy to get started with Elasticsearch!
+                </aside>
             </section>
 
             <section>
@@ -265,48 +271,54 @@
             <section>
                 <h2>REST API</h2>
 
-                <p>Elasticsearch hides the complexities of Lucene behind a simple, coherent, RESTful API (GET, PUT,
+                <p>Elasticsearch hides the complexities of Lucene (and search theory) behind a simple, coherent, RESTful API (GET, PUT,
                     POST, DELETE).</p>
-                <!--<p>CURL works just fine!</p>-->
-                <img data-src="images/crud.png"/>
+            </section>
+
+            <section>
+                <h2>CURL works just fine!</h2>
+                <img height="300" data-src="images/crud.png"/>
+                <ul>
+                     <li>An index is like a database</li>
+                     <li>An type is like a SQL table</li>
+                 </ul>
             </section>
 
             <section>
                 <h2>What is stored in Elasticsearch?</h2>
 
                 <p>JSON documents!</p>
-                <pre><code class="hljs" data-trim contenteditable>
+                <pre class="json"><code class="hljs" data-trim contenteditable>
 {
-   "key1": "value1",
-   "key2": "value2"
-   ...
+   "title": "Introduction to Elasticsearch",
+   "date": "2016-04-07",
+   "author": "Eirik Ola Aksnes"
 }
                 </code></pre>
             </section>
 
             <section>
-                <h2>How to index data?</h2>
+                <h2>How to store data?</h2>
 
-                <p>The act of storing data in Elasticsearch is called indexing. An index is like a database. </p>
+                <p>The act of storing data in Elasticsearch is called indexing.</p>
                 <pre><code class="hljs" data-trim contenteditable>
 $curl -X POST localhost:9200/big-one/pizza/ --data
 '[
-{ "id": 1, "name": "California Sunset Chicken" },
-{ "id": 2, "name": "American Bacon" },
-{ "id": 3, "name": "Classic American" },
-{ "id": 4, "name": "Double Pepperoni" },
-{ "id": 5, "name": "Triple Cheese" },
-{ "id": 6, "name": "Take Away Meat Lover" },
-{ "id": 7, "name": "New York Grilled Steak" },
-{ "id": 8, "name": "Meat lover" },
-{ "id": 9, "name": "California Malibu" },
-{ "id": 10, "name": "California Meatballs" }
+  { "id": 1, "name": "California Sunset Chicken" },
+  { "id": 2, "name": "American Bacon" },
+  { "id": 3, "name": "Classic American" },
+  { "id": 4, "name": "Double Pepperoni" },
+  { "id": 5, "name": "Triple Cheese" },
+  { "id": 6, "name": "Take Away Meat Lover" },
+  { "id": 7, "name": "New York Grilled Steak" },
+  { "id": 8, "name": "Meat lover" },
+  { "id": 9, "name": "California Malibu" },
+  { "id": 10, "name": "California Meatballs" }
 ]'
                 </code></pre>
                 <aside class="notes">
                     It is much like the INSERT keyword in SQL except that, if the document already exists, the new
-                    document would replace the old.
-                    The second part indicates on which index (an index could be compared to an SQL database, though I
+                    document would replace the old. The second part indicates on which index (an index could be compared to an SQL database, though I
                     don’t like this comparison) your query will be performed, and what is the type (a type could be
                     compared to an SQL table, though I don’t like this comparison either) of the document. From now, I
                     will write indices and types in orange
@@ -337,8 +349,8 @@ $curl -X POST localhost:9200/big-one/pizza/ --data
                 <h2>Update</h2>
                 <pre><code class="hljs" data-trim contenteditable>
 $curl -X PUT localhost:9200/big-one/pizza/1 --data
-'{ 
-   "name":"California Sunset Chicken Awesome" 
+'{
+   "name":"California Sunset Chicken Awesome"
 }'
                 </code></pre>
                 <p>Result:</p>
@@ -363,16 +375,21 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
 
             <section>
                 <h2>So far, all we have is a NoSQL document store which is fast, reliable, scalable and easy to use! Now
-                    to the really cool part, search...</h2>
+                    to the really cool part, full-text search...</h2>
             </section>
 
             <section>
-                <h2>Basic free text search</h2>
+                <h2>Full-text search</h2>
+                <p>Find all pizzas that contains the word "California"</p>
                 <pre><code class="hljs" data-trim contenteditable>
                     $curl -X GET localhost:9200/big-one/pizza/_search?q=California
                 </code></pre>
-                <p>Result:</p>
-                <pre><code class="hljs" data-trim contenteditable>
+            </section>
+
+            <section>
+                <h2>Full-text search - Result</h2>
+                <p>Sorted by relevance!</p>
+                <pre class="json"><code class="hljs" data-trim contenteditable>
 {
    "took":6,
    "timed_out":false,
@@ -422,37 +439,28 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
                 <h2>Alternate Approach</h2>
                 <ul>
                     <li>Search using Query DSL</li>
-                    <li>JSON in request body</li>
                 </ul>
-                <aside class="notes">
-                    Query-string search is handy for ad hoc searches from the command line, but it has its
-                    limitations.
-                    Elasticsearch provides a rich, flexible, query language called the Query DSL, which allows us to
-                    build much more complicated, robust queries.
-                </aside>
             </section>
 
             <section>
-                <h2>Query DSL - Search</h2>
+                <h2>Full-text search</h2>
 
-                <p>Finds all documents matching the given search keywords, and returns them sorted by relevance.</p>
+                <p>Find the pizzas with a name that contains the word "Meat"</p>
                 <pre><code class="hljs" data-trim contenteditable>
                     $curl -XGET ‘localhost:9200/books/book/_search’ -d 
-‘
-{
+'{
    "query":{
       "match":{
          "name":"Meat"
       }
    }
-}
-’
-
+}'
                 </code></pre>
             </section>
 
             <section>
-                <h2>Query DSL - Search result</h2>
+                <h2>Full-text search - result</h2>
+                <p>Sorted by relevance!</p>
                 <pre><code class="hljs" data-trim contenteditable>
 {
    "took":3,
@@ -497,11 +505,6 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
 }
                 </code></pre>
             </section>
-
-            <section>
-                <h2>And much more...</h2>
-            </section>
-
         </section>
 
         <section>
@@ -540,20 +543,20 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
                 <h2>How to use Ealsticsearch?</h2>
 
                 <p>Commonly used in addition to another database...</p>
-                <img data-src="images/overview.png"/>
-            </section>
-
-            <section>
-                <h2>Show user accesss!</h2>
-
+                <img height="350" data-src="images/overview.png"/>
             </section>
         </section>
 
         <section>
-            <h2>The END</h2>
-
-            <p>With Elasticsearch it is easy to start building advanced search functionality. No configuration is
-                needed—just add data and start searching!</p>
+            <h2>The end!</h2>
+            <ul>
+                <li>It is easy to start building advanced search functionality
+                    <ul>
+                        <li>No configuration is needed</li>
+                        <li>Just add data and start searching</li>
+                    </ul>
+                </li>
+            </ul>
         </section>
 
         <section>
