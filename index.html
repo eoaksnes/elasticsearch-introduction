@@ -218,16 +218,16 @@
             </section>
 
             <section>
-                <h2>It is that easy!</h2>
-
-                <p>ElasticSearch can be downloaded packaged in various formats such as ZIP and TAR.GZ from
-                    elasticsearch.org.</p>
-
-                <p>Elasticsearch only require Java to run!</p>
+                <h2>It is that easy</h2>
+                <ul>
+                    <li>Download Elasticsearch from www.elastic.co</li>
+                    <li>Only requires Java to run</li>
+                </ul>
                 <pre><code class="hljs" data-trim contenteditable>
-wget https://download.elasticsearch.org/elasticsearch/....
+wget https://download.elasticsearch.org/elasticsearch/release/...
 tar -zxvf elasticsearch-2.2.0.tar.gz
 cd elasticsearch-2.2.0/bin
+# Start
 ./elasticsearch.sh
                 </code></pre>
             </section>
@@ -270,8 +270,10 @@ cd elasticsearch-2.2.0/bin
             <section>
                 <h2>REST API</h2>
 
-                <p>Elasticsearch hides the complexities of Lucene (and search theory) behind a simple, coherent, RESTful API (GET, PUT,
-                    POST, DELETE).</p>
+                <ul>
+                    <li>Elasticsearch hides the complexities of Lucene behind a simple REST API
+                    <li>GET, PUT, POST, DELETE</li>
+                </ul>
             </section>
 
             <section>
@@ -297,7 +299,16 @@ cd elasticsearch-2.2.0/bin
             </section>
 
             <section>
-                <h2>How to store data?</h2>
+                <h2>Let's do an example - A BigOne pizza website</h2>
+                <ul>
+                    <li>We are building a website to find BigOne pizzas</li>
+                    <li>We have a collection of BigOne pizzas</li>
+                    <li>We want simple text based searching</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>How to store the pizzas?</h2>
 
                 <p>The act of storing data in Elasticsearch is called indexing.</p>
                 <pre><code class="hljs" data-trim contenteditable>
@@ -512,7 +523,7 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
             </section>
 
             <section data-background="images/kokeboka4.png">
-                <aside class="notes">
+                 <aside class="notes">
                     <ul>
                         <li>
                             Grunnen til at jeg ønsket å lære meg om søkemotorer var...
@@ -535,6 +546,10 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
 
             <section>
                 <h2>Alt Mulig Mat</h2>
+                <ul>
+                    <li>Keyword-based searching</li>
+                    <li>Structured searching, like find all "Dessert" recipes</li>
+                </ul>
                 <a href="https://altmuligmat.no" target="_blank"><img data-src="images/altmuligmat.png"/></a>
             </section>
 
