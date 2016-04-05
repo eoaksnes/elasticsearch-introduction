@@ -45,35 +45,58 @@
             <p>
                 <small>Eirik Ola Aksnes</small>
             </p>
+            <aside class="notes">
+                <ul>
+                    <li>
+                        Velkommen, i dag skal jeg holde en veldig kort introduksjon til Elasticsearch.
+                    </li>
+                </ul>
+            </aside>
         </section>
 
         <section>
             <h2>Agenda</h2>
             <ul>
-                <li>How does a search engine work</li>
-                <li>Elasticsearch
+                <li class="fragment">How does a search engine work</li>
+                <li class="fragment">Elasticsearch
                     <ul>
-                        <li>What is</li>
-                        <li>How to get started</li>
-                        <li>Own experience</li>
-                        <li>Use cases</li>
+                        <li class="fragment">What is</li>
+                        <li class="fragment">How to get started</li>
+                        <li class="fragment">Own experience</li>
+                        <li class="fragment">Use cases</li>
                     </ul>
                 </li>
             </ul>
+            <aside class="notes">
+                <ul>
+                    <li>Agendaen idag er som følgende...</li>
+                </ul>
+            </aside>
         </section>
 
         <section>
             <section>
                 <h2>How does a search engine work?</h2>
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            Hvordan fungerer en søkemotor?
+                        </li>
+                    </ul>
+                </aside>
             </section>
 
             <section data-background="images/overflow2.jpg">
                 <blockquote style="background: black; padding: 10px;">
+                    Your document collection is big! <br />
                     Scan through all the documents every time you search for something?
                 </blockquote>
                 <aside class="notes">
-                    Your document collection is big! Scan all the documents every time you search for something, it
-                    would take forever.
+                    <ul>
+                        <li>
+                            Det ville ta en evighet <!-- It would take forever.-->
+                        </li>
+                    </ul>
                 </aside>
             </section>
 
@@ -81,23 +104,64 @@
                 <blockquote style="background: black; padding: 10px;">
                     Pre-process the documents and create an index!
                 </blockquote>
-                <aside class="notes">
+                <!--<aside class="notes">
                     To make your queries fast and efficient a search engine will pre-process the documents and create an
                     index
+                </aside>-->
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            For å gjøre dine søk raskt og effektivt vil en søkemotor forhåndsbehandle dokumentene og lage en index
+                        </li>
+                    </ul>
                 </aside>
             </section>
 
             <section data-background="white">
                 <h2>Create an inverted index</h2>
                 <img style="box-shadow: none;" data-src="images/inverted-index-1.svg">
-                <aside class="notes">
+                <!--<aside class="notes">
                     The inverted index maps terms to documents containing the term.
+                </aside>-->
+                <aside class="notes">
+                    <ul>
+                        <li>Man lager seg da noe som heter en "invertert index"</li>
+                        <li>På venstre siden har vi tre dokumenter...</li>
+                        <li>Siden dette er en BigOne konferanse, så er mye av innholdet i dag være pizza relatert...</li>
+                        <li>Det som skjer er at man lager seg en invertert index av disse dokumentene (dokumentene blir
+                            indeksert, som det heter)
+                        </li>
+                        <li>En invertert index (som vi ser på høyre side her nå) inneholder alle ordene som finnes i dokumentene, og for hvert ord så
+                            lister man opp hvilke dokumenter som inneholder ordet...
+                        </li>
+                        <li>Så ordet "pizza" inneholder dokument 0 og 2</li>
+                    </ul>
                 </aside>
             </section>
 
             <section data-background="white">
                 <h2>Find unique terms</h2>
                 <img style="box-shadow: none;" data-src="images/inverted-index-2.svg">
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            Så hvordan finner man unike ord?
+                            <ul>
+                                <li>
+                                    Hvis man f.eks tar for seg dokumentet "Turles loves pizza", så vil det gå igjennom forskjellige steg...
+                                    <ul>
+                                        <li>Man splitter opp dokumentet i ord</li>
+                                        <li>Man gjør alle bokstaver små</li>
+                                        <li>Man finner grunnstammer på ord, f.eks "Loves" blir "love"</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    Dette er ett forenklet eksempel...
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </aside>
             </section>
 
             <section data-background="white">
@@ -123,6 +187,8 @@
             <img style="box-shadow: none;" data-src="images/introduction.svg">
             <aside class="notes">
                 <ul>
+                    <li>Jeg skal nå bruke sirka 1 minutt på å si hva Elasticsearch er.</li>
+                    <li>Jeg vil heller bruke tiden til å forklare hvordan man kan komme igang med Elasticsearch</li>
                     <li>
                         Lucene
                         <ul>
@@ -137,6 +203,11 @@
         <section>
             <section>
                 <h2>How to get started with Elasticsearch?</h2>
+                <aside class="notes">
+                    <ul>
+                        <li>Så hvordan kan man komme igang med Elasticsearch...</li>
+                    </ul>
+                </aside>
             </section>
 
             <section>
@@ -194,7 +265,7 @@ cd elasticsearch-2.2.0/bin
 
                 <ul>
                     <li>Elasticsearch hides the complexities of Lucene behind a simple REST API
-                    <li>GET, PUT, POST, DELETE</li>
+                    <li>POST, GET, PUT, DELETE (create, read, update and delete)</li>
                 </ul>
             </section>
 
