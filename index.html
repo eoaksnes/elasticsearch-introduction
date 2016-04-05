@@ -312,19 +312,20 @@ cd elasticsearch-2.2.0/bin
 
                 <p>The act of storing data in Elasticsearch is called indexing.</p>
                 <pre><code class="hljs" data-trim contenteditable>
-$curl -X POST localhost:9200/big-one/pizza/ --data
-'[
-  { "id": 1, "name": "California Sunset Chicken" },
-  { "id": 2, "name": "American Bacon" },
-  { "id": 3, "name": "Classic American" },
-  { "id": 4, "name": "Double Pepperoni" },
-  { "id": 5, "name": "Triple Cheese" },
-  { "id": 6, "name": "Take Away Meat Lover" },
-  { "id": 7, "name": "New York Grilled Steak" },
-  { "id": 8, "name": "Meat lover" },
-  { "id": 9, "name": "California Malibu" },
-  { "id": 10, "name": "California Meatballs" }
-]'
+$curl -X POST localhost:9200/big-one/pizza/1 --data
+'{
+    "name": "California Sunset Chicken"
+}'
+
+$curl -X POST localhost:9200/big-one/pizza/2 --data
+'{
+    "name": "American Bacon"
+}'
+
+$curl -X POST localhost:9200/big-one/pizza/3 --data
+'{
+    "name": "Classic American"
+}'
                 </code></pre>
                 <aside class="notes">
                     It is much like the INSERT keyword in SQL except that, if the document already exists, the new
@@ -332,6 +333,12 @@ $curl -X POST localhost:9200/big-one/pizza/ --data
                     don’t like this comparison) your query will be performed, and what is the type (a type could be
                     compared to an SQL table, though I don’t like this comparison either) of the document. From now, I
                     will write indices and types in orange
+
+<!--
+curl -X POST localhost:9200/big-one/pizza/1 --data '{ "name": "California Sunset Chicken" }'
+curl -X POST localhost:9200/big-one/pizza/2 --data '{ "name": "American Bacon" }'
+curl -X POST localhost:9200/big-one/pizza/3 --data '{ "name": "Classic American"}'
+-->
                 </aside>
             </section>
 
@@ -404,9 +411,9 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
 
             <section>
                 <h2>Full-text search</h2>
-                <p>Find all pizzas that contains the word "California"</p>
+                <p>Find all pizzas that contains the word "American"</p>
                 <pre><code class="hljs" data-trim contenteditable>
-                    $curl -X GET localhost:9200/big-one/pizza/_search?q=California
+                    $curl -X GET localhost:9200/big-one/pizza/_search?q=American
                 </code></pre>
             </section>
 
@@ -415,7 +422,7 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
                 <p>Sorted by relevance!</p>
                 <pre class="json"><code class="hljs" data-trim contenteditable>
 {
-   "took":6,
+   "took":4,
    "timed_out":false,
    "_shards":{
       "total":5,
@@ -423,34 +430,25 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
       "failed":0
    },
    "hits":{
-      "total":3,
-      "max_score":0.70273256,
+      "total":2,
+      "max_score":0.19178301,
       "hits":[
          {
             "_index":"big-one",
             "_type":"pizza",
-            "_id":"10",
-            "_score":0.70273256,
+            "_id":"2",
+            "_score":0.19178301,
             "_source":{
-               "name":"California Meatballs"
+               "name":"American Bacon"
             }
          },
          {
             "_index":"big-one",
             "_type":"pizza",
-            "_id":"9",
-            "_score":0.5,
+            "_id":"3",
+            "_score":0.19178301,
             "_source":{
-               "name":"California Malibu"
-            }
-         },
-         {
-            "_index":"big-one",
-            "_type":"pizza",
-            "_id":"1",
-            "_score":0.5,
-            "_source":{
-               "name":"California Sunset Chicken"
+               "name":"Classic American"
             }
          }
       ]
@@ -469,13 +467,13 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
             <section>
                 <h2>Full-text search</h2>
 
-                <p>Find the pizzas with a name that contains the word "Meat"</p>
+                <p>Find the pizzas with a name that contains the word "American"</p>
                 <pre><code class="hljs" data-trim contenteditable>
-                    $curl -XGET ‘localhost:9200/books/book/_search’ -d 
+                    $curl -XGET ‘localhost:9200/big-one/pizza/_search -d
 '{
    "query":{
       "match":{
-         "name":"Meat"
+         "name":"American"
       }
    }
 }'
@@ -487,41 +485,33 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
                 <p>Sorted by relevance!</p>
                 <pre><code class="hljs" data-trim contenteditable>
 {
-   "took":3,
-   "timed_out":false,
-   "_shards":{
-      "total":5,
-      "successful":5,
-      "failed":0
+   "took": 8,
+   "timed_out": false,
+   "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
    },
-   "hits":{
-      "total":2,
-      "max_score":0.8784157,
-      "hits":[
+   "hits": {
+      "total": 2,
+      "max_score": 0.19178301,
+      "hits": [
          {
-            "_index":"big-one",
-            "_type":"pizza",
-            "_id":"8",
-            "_score":0.8784157,
-            "_source":{
-               "topping":[
-                  "Chorizo"
-               ],
-               "name":"Meat lover"
+            "_index": "big-one",
+            "_type": "pizza",
+            "_id": "2",
+            "_score": 0.19178301,
+            "_source": {
+               "name": "American Bacon"
             }
          },
          {
-            "_index":"big-one",
-            "_type":"pizza",
-            "_id":"6",
-            "_score":0.5,
-            "_source":{
-               "topping":[
-                  "Meatballs",
-                  "Marinated Beef",
-                  "Bacon"
-               ],
-               "name":"Take Away Meat Lover"
+            "_index": "big-one",
+            "_type": "pizza",
+            "_id": "3",
+            "_score": 0.19178301,
+            "_source": {
+               "name": "Classic American"
             }
          }
       ]
