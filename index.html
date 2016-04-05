@@ -134,26 +134,6 @@
             </aside>
         </section>
 
-        <!--<section>
-            <h2>Google web search engine</h2>
-            <img data-src="images/google.png" alt="Down arrow">
-            <aside class="notes">
-                <ul>
-                    <li>Alle kjenner Google for å søke på nettet...</li>
-                    <li>Google er en søkemotor for å finne informasjon på nettet..</li>
-                    <li>Søkemotoren til Google har en liste over sider som inneholder “introduction to”...</li>
-                    <li>Søkemotoren vil finne sider som inneholder alle søkeordene dine, altså sider som inneholder både
-                        “introduction” og “to”
-                    </li>
-                    <li>Søkemotoren vil finne både store og små forekomster av søkeordet ditt</li>
-                    <li>Google har indeksert sider som gjør at de er tilgjengelig for søk….</li>
-                    <li>Søkemotoren til Google er også hjelpsom og vil komme med forslag til hva man bør søke
-                        etter....
-                    </li>
-                </ul>
-            </aside>
-        </section>-->
-
         <section>
             <section>
                 <h2>How to get started with Elasticsearch?</h2>
@@ -411,7 +391,7 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
 
                 <p>Find the pizzas with a name that contains the word "American"</p>
                 <pre><code class="hljs" data-trim contenteditable>
-                    $curl -XGET ‘localhost:9200/big-one/pizza/_search -d
+                    $curl -XGET localhost:9200/big-one/pizza/_search -d
 '{
    "query":{
       "match":{
@@ -554,14 +534,6 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
                 <h2>Geolocation</h2>
                 <img data-src="images/fouraquare.png"/>
             </section>
-
-            <!--<section>
-                <h2>And more</h2>
-                <ul>
-                    <li>Alert system: Get notifications about changes in your data.</li>
-                    <li>Reporting: Generate, schedule, and email PDF reports.</li>
-                </ul>
-            </section>-->
 
         </section>
 
