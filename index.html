@@ -229,13 +229,12 @@
                 <h2>It is that easy</h2>
                 <ul>
                     <li>Download Elasticsearch from www.elastic.co</li>
-                    <li>Only requires Java to run</li>
+                    <li>Elasticsearch only requires Java to run</li>
                 </ul>
                 <pre><code class="hljs" data-trim contenteditable>
 wget https://download.elasticsearch.org/elasticsearch/release/...
 tar -zxvf elasticsearch-2.2.0.tar.gz
 cd elasticsearch-2.2.0/bin
-# Start
 ./elasticsearch.sh
                 </code></pre>
             </section>
@@ -243,9 +242,10 @@ cd elasticsearch-2.2.0/bin
             <section>
                 <h2>Zero configurations</h2>
                 <ul>
-                    <li>It just works, right out of the box
+                    <li>Elasticsearch just works
                         <ul>
-                            <li>It has sensible defaults</li>
+                            <li>No configuration is needed</li>
+                            <li>It has sensible defaults settings</li>
                         </ul>
                     </li>
                 </ul>
@@ -279,13 +279,18 @@ cd elasticsearch-2.2.0/bin
                 <h2>REST API</h2>
 
                 <ul>
-                    <li>Elasticsearch hides the complexities of Lucene behind a simple REST API
-                    <li>POST, GET, PUT, DELETE (create, read, update and delete)</li>
+                    <li>Elasticsearch hides the complexities of Lucene behind a REST API
+                    <ul>
+                        <li>POST (create)</li>
+                        <li>GET (read)</li>
+                        <li>PUT (update)</li>
+                        <li>DELETE (delete)</li>
+                    </ul>
                 </ul>
             </section>
 
             <section>
-                <h2>CURL works just fine!</h2>
+                <h2>CURL works just fine</h2>
                 <img height="300" data-src="images/crud.png"/>
                 <ul>
                      <li class="fragment">An index is like a database</li>
