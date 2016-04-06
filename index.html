@@ -21,6 +21,14 @@
     <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
 
+    <style>
+        .background-image-overlay {
+            background: black !important;
+            padding: 10px;
+            opacity: 0.8;
+        }
+    </style>
+
     <!-- Printing and PDF exports -->
     <script>
         var link = document.createElement('link');
@@ -87,21 +95,21 @@
             </section>
 
             <section data-background="images/overflow2.jpg">
-                <blockquote style="background: black; padding: 10px;">
+                <blockquote class="background-image-overlay">
                     Your document collection is big! <br />
                     Scan through all the documents every time you search for something?
                 </blockquote>
                 <aside class="notes">
                     <ul>
                         <li>
-                            Det ville ta en evighet <!-- It would take forever.-->
+                            Dette ville tatt evigheter
                         </li>
                     </ul>
                 </aside>
             </section>
 
             <section data-background="images/kokeboka4.png">
-                <blockquote style="background: black; padding: 10px;">
+                <blockquote class="background-image-overlay">
                     Pre-process the documents and create an index!
                 </blockquote>
                 <!--<aside class="notes">
@@ -127,14 +135,14 @@
                     <ul>
                         <li>Man lager seg da noe som heter en "invertert index"</li>
                         <li>På venstre siden har vi tre dokumenter...</li>
-                        <li>Siden dette er en BigOne konferanse, så er mye av innholdet i dag være pizza relatert...</li>
+                        <li>Siden dette er en BigOne konferanse, så vil mye av innholdet i dag være pizza relatert...</li>
                         <li>Det som skjer er at man lager seg en invertert index av disse dokumentene (dokumentene blir
                             indeksert, som det heter)
                         </li>
                         <li>En invertert index (som vi ser på høyre side her nå) inneholder alle ordene som finnes i dokumentene, og for hvert ord så
                             lister man opp hvilke dokumenter som inneholder ordet...
                         </li>
-                        <li>Så ordet "pizza" inneholder dokument 0 og 2</li>
+                        <li>Så ordet "pizza" finnes i dokument 0 og 2</li>
                     </ul>
                 </aside>
             </section>
@@ -152,7 +160,7 @@
                                     <ul>
                                         <li>Man splitter opp dokumentet i ord</li>
                                         <li>Man gjør alle bokstaver små</li>
-                                        <li>Man finner grunnstammer på ord, f.eks "Loves" blir "love"</li>
+                                        <li>Man finner grunnstammer for ord, f.eks "Loves" blir "love"</li>
                                     </ul>
                                 </li>
                                 <li>
@@ -179,21 +187,28 @@
                     document matches the query.
                 </aside>
             </section>
-
-
         </section>
 
         <section data-background="white">
             <img style="box-shadow: none;" data-src="images/introduction.svg">
             <aside class="notes">
                 <ul>
-                    <li>Jeg skal nå bruke sirka 1 minutt på å si hva Elasticsearch er.</li>
-                    <li>Jeg vil heller bruke tiden til å forklare hvordan man kan komme igang med Elasticsearch</li>
-                    <li>
-                        Lucene
+                    <li>Jeg skal nå bruke sirka 1 minutt på å si hva Elasticsearch er.
                         <ul>
-                            <li>Cumbersome to use directly</li>
-                            <li>Provides few features for scaling past a single machine</li>
+                            <li>
+                                Lucene
+                                <ul>
+                                    <li>Cumbersome to use directly</li>
+                                    <li>Provides few features for scaling past a single machine</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Real time
+                                <ul>
+                                    <li>Det går fort å indeksere dokumenter</li>
+                                    <li>Data er tilgjenglig for søk nesten med en gang etter indeksering</li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -230,7 +245,7 @@ cd elasticsearch-2.2.0/bin
                 <ul>
                     <li>It just works, right out of the box
                         <ul>
-                            <li>Sensible defaults</li>
+                            <li>It has sensible defaults</li>
                         </ul>
                     </li>
                 </ul>
@@ -243,7 +258,7 @@ cd elasticsearch-2.2.0/bin
                 <h2>Is Elasticsearch alive?</h2>
 
                 <p>You can access it at http://localhost:9200 on your web browser, which returns this:</p>
-                <pre><code class="hljs" data-trim contenteditable>
+                <pre class="fragment"><code class="hljs" data-trim contenteditable>
 {
    "status":200,
    "name":"Cypher",
@@ -273,8 +288,8 @@ cd elasticsearch-2.2.0/bin
                 <h2>CURL works just fine!</h2>
                 <img height="300" data-src="images/crud.png"/>
                 <ul>
-                     <li>An index is like a database</li>
-                     <li>An type is like a SQL table</li>
+                     <li class="fragment">An index is like a database</li>
+                     <li class="fragment">An type is like a SQL table</li>
                  </ul>
             </section>
 
@@ -294,9 +309,9 @@ cd elasticsearch-2.2.0/bin
             <section>
                 <h2>Let's do an example - A BigOne pizza website</h2>
                 <ul>
-                    <li>We are building a website to find BigOne pizzas</li>
-                    <li>We have a collection of BigOne pizzas</li>
-                    <li>We want simple text based searching</li>
+                    <li class="fragment">We are building a website to find BigOne pizzas</li>
+                    <li class="fragment">We have a collection of BigOne pizzas</li>
+                    <li class="fragment">We want simple text based searching</li>
                 </ul>
             </section>
 
@@ -341,7 +356,7 @@ curl -X POST localhost:9200/big-one/pizza/3 --data '{ "name": "Classic American"
                     $curl -X GET localhost:9200/big-one/pizza/1
                 </code></pre>
                 <p>Result:</p>
-                <pre><code class="hljs" data-trim contenteditable>
+                <pre class="fragment"><code class="hljs" data-trim contenteditable>
 {
    "_index":"big-one",
    "_type":"pizza",
@@ -364,7 +379,7 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
 }'
                 </code></pre>
                 <p>Result:</p>
-               <pre><code class="hljs" data-trim contenteditable>
+               <pre class="fragment"><code class="hljs" data-trim contenteditable>
 {
    "_index":"big-one",
    "_type":"pizza",
@@ -404,7 +419,7 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
 
             <section>
                 <h2>Full-text search</h2>
-                <p>Find all pizzas that contains the word "American"</p>
+                <p>Find all the pizzas that contains the word "American"</p>
                 <pre><code class="hljs" data-trim contenteditable>
                     $curl -X GET localhost:9200/big-one/pizza/_search?q=American
                 </code></pre>
