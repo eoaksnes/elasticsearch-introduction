@@ -290,7 +290,7 @@ cd elasticsearch-2.2.0/bin
             </section>
 
             <section>
-                <h2>CURL works just fine</h2>
+                <h2>DEMO - CURL works just fine</h2>
                 <img height="300" data-src="images/crud.png"/>
                 <ul>
                      <li class="fragment">An index is like a database</li>
@@ -432,8 +432,7 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
 
             <section>
                 <h2>Full-text search - Result</h2>
-                <p>Sorted by relevance!</p>
-                <pre class="json"><code class="hljs" data-trim contenteditable>
+                <pre class="json"><code class="hljs">
 {
    "took":4,
    "timed_out":false,
@@ -468,6 +467,9 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
    }
 }
                 </code></pre>
+                <aside class="notes">
+                    <p>Sorted by relevance!</p>
+                </aside>
             </section>
 
             <section>
@@ -495,7 +497,6 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
 
             <section>
                 <h2>Full-text search - result</h2>
-                <p>Sorted by relevance!</p>
                 <pre><code class="hljs" data-trim contenteditable>
 {
    "took": 8,
@@ -564,8 +565,8 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
             <section>
                 <h2>Alt Mulig Mat</h2>
                 <ul>
-                    <li>Keyword-based searching</li>
-                    <li>Structured searching, like find all "Dessert" recipes</li>
+                    <li>Text based searching</li>
+                    <li>Structured searching (get all "Dessert" recipes)</li>
                 </ul>
                 <a href="https://altmuligmat.no" target="_blank"><img data-src="images/altmuligmat.png"/></a>
             </section>
@@ -638,6 +639,10 @@ $curl -X PUT localhost:9200/big-one/pizza/1 --data
                     </ul>
                 </li>
             </ul>
+        </section>
+
+        <section>
+            <h2>Questions?</h2>
         </section>
 
         <section>
